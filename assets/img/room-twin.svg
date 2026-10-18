@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" width="1200" height="800" role="img">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f7fbfa"/><stop offset="1" stop-color="#a8d8f0"/></linearGradient></defs>
+
+<rect width="1200" height="800" fill="url(#bg)"/>
+<g opacity=".55"><rect x="116.2" y="94.5" width="211.7" height="387.1" rx="20.2" fill="#ffffff" opacity="0.35"/><rect x="116.2" y="94.5" width="211.7" height="387.1" rx="20.2" fill="none" stroke="#a8d8f0" stroke-width="2" opacity=".55"/><rect x="368.2" y="94.5" width="211.7" height="387.1" rx="20.2" fill="#ffffff" opacity="0.35"/><rect x="368.2" y="94.5" width="211.7" height="387.1" rx="20.2" fill="none" stroke="#a8d8f0" stroke-width="2" opacity=".55"/><rect x="620.2" y="94.5" width="211.7" height="387.1" rx="20.2" fill="#ffffff" opacity="0.35"/><rect x="620.2" y="94.5" width="211.7" height="387.1" rx="20.2" fill="none" stroke="#a8d8f0" stroke-width="2" opacity=".55"/><rect x="872.2" y="94.5" width="211.7" height="387.1" rx="20.2" fill="#ffffff" opacity="0.35"/><rect x="872.2" y="94.5" width="211.7" height="387.1" rx="20.2" fill="none" stroke="#a8d8f0" stroke-width="2" opacity=".55"/></g>
+<!-- floor -->
+<rect x="0" y="576" width="1200" height="224" fill="#1d4e6b" opacity=".22"/>
+<!-- headboard -->
+<rect x="264" y="272" width="672" height="216"
+      rx="32" fill="#2a6f97" opacity=".40"/>
+<!-- mattress -->
+<rect x="240" y="480" width="720" height="136"
+      rx="20" fill="#ffffff" opacity=".92"/>
+<!-- base -->
+<rect x="252" y="608" width="696" height="56"
+      rx="10" fill="#2a6f97" opacity=".55"/>
+<!-- runner -->
+<rect x="240" y="560" width="720" height="36"
+      fill="#2a6f97" opacity=".45"/>
+<!-- pillows -->
+<rect x="300" y="452" width="264" height="60"
+      rx="22" fill="#ffffff"/>
+<rect x="636" y="452" width="264" height="60"
+      rx="22" fill="#ffffff"/>
+<!-- side tables + lamps -->
+<rect x="120" y="512" width="96" height="152"
+      rx="6" fill="#2a6f97" opacity=".5"/>
+<circle cx="168" cy="472" r="36" fill="#ffd9a0" opacity=".85"/>
+<rect x="984" y="512" width="96" height="152"
+      rx="6" fill="#2a6f97" opacity=".5"/>
+<circle cx="1032" cy="472" r="36" fill="#ffd9a0" opacity=".85"/>
+
+</svg>
