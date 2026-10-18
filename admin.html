@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Front Desk — Aurelia Hotel Admin</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+  body { background: var(--surface-2); }
+  .admin-bar { background: #0c1a1f; color: #fff; }
+  .admin-bar .wrap { display: flex; align-items: center; gap: 12px; min-height: 64px; flex-wrap: wrap; }
+  .admin-bar .brand { color: #fff; margin-right: auto; }
+  .admin-bar .brand__sub { color: #86a0a8; }
+  .gate { max-width: 420px; margin: 70px auto; }
+  .actions { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+  .actions .btn { padding: 6px 11px; font-size: .8rem; }
+  .filterbar { display: flex; gap: 10px; flex-wrap: wrap; align-items: end; margin-bottom: 16px; }
+  .filterbar .field { min-width: 150px; }
+  .occ-bar { height: 8px; border-radius: 4px; background: var(--surface-3); overflow: hidden; }
+  .occ-bar > span { display: block; height: 100%; background: var(--accent); }
+</style>
+</head>
+<body>
+
+<div class="demo-flag">Demo admin panel — anyone can open this page. The passcode below is a stand-in, not real security.</div>
+
+<header class="admin-bar">
+  <div class="wrap">
+    <a class="brand" href="admin.html">
+      <span class="brand__mark">A</span>
+      <span><span class="brand__name">Aurelia</span><span class="brand__sub">Front desk</span></span>
+    </a>
+    <a class="btn btn--light btn--sm" href="index.html">View public site</a>
+    <button class="btn btn--light btn--sm" type="button" id="logoutBtn" hidden>Lock</button>
+  </div>
+</header>
+
+<!-- ============ Login gate ============ -->
+<section class="wrap" id="gate">
+  <div class="panel gate">
+    <h1 style="font-size:1.4rem">Staff sign in</h1>
+    <p class="small muted">Demo passcode: <strong>aurelia</strong></p>
+    <form id="gateForm" class="stack mt-2">
+      <div class="field">
+        <label for="pin">Passcode</label>
+        <input class="input" id="pin" type="password" autocomplete="off" placeholder="aurelia">
+      </div>
+      <button class="btn btn--primary btn--block" type="submit">Sign in</button>
+      <div id="gateNotice"></div>
+    </form>
+    <p class="hint mt-2" style="margin-bottom:0">
+      This check runs in the browser, so it keeps honest people out and nobody else.
+      A real hotel system needs a server with proper accounts — see the README.
+    </p>
+  </div>
+</section>
+
+<!-- ============ Admin app ============ -->
+<main class="wrap section" id="app" hidden style="padding-top:28px">
+
+  <div class="tabs" role="tablist">
+    <button data-tab="tab-dash"     role="tab" aria-selected="true">Dashboard</button>
+    <button data-tab="tab-bookings" role="tab" aria-selected="false">Bookings</button>
+    <button data-tab="tab-rooms"    role="tab" aria-selected="false">Rooms</button>
+    <button data-tab="tab-rates"    role="tab" aria-selected="false">Rates</button>
+    <button data-tab="tab-data"     role="tab" aria-selected="false">Data</button>
+  </div>
+
+  <!-- ---------- Dashboard ---------- -->
+  <section class="tabpanel" id="tab-dash" role="tabpanel">
+    <div class="stats" id="dashStats"></div>
+
+    <div class="grid grid--2 mt-3">
+      <div class="panel">
+        <h3>Arriving today</h3>
+        <div id="arrivals"></div>
+      </div>
+      <div class="panel">
+        <h3>Departing today</h3>
+        <div id="departures"></div>
+      </div>
+    </div>
+
+    <div class="panel mt-3">
+      <h3>Occupancy tonight, by room type</h3>
+      <div id="occByType" class="stack" style="margin-top:12px"></div>
+    </div>
+  </section>
+
+  <!-- ---------- Bookings ---------- -->
+  <section class="tabpanel" id="tab-bookings" role="tabpanel" hidden>
+
+    <div class="panel">
+      <div class="between" style="margin-bottom:12px">
+        <h3 style="margin:0">All bookings</h3>
+        <button class="btn btn--primary btn--sm" type="button" id="newBookingBtn">+ Walk-in booking</button>
+      </div>
+
+      <div class="filterbar">
+        <div class="field">
+          <label for="f-status">Show</label>
+          <select class="input" id="f-status">
+            <option value="all">Everything</option>
+            <option value="upcoming">Upcoming</option>
+            <option value="in-house">In house</option>
+            <option value="past">Past</option>
+            <option value="cancelled">Cancelled</option>
+          </select>
+        </div>
+        <div class="field" style="flex:1 1 220px">
+          <label for="f-search">Search</label>
+          <input class="input" id="f-search" type="search" placeholder="Name, email, reference or room">
+        </div>
+      </div>
+
+      <div class="table-scroll">
+        <table class="data">
+          <thead>
+            <tr>
+              <th>Reference</th><th>Guest</th><th>Room</th><th>Dates</th>
+              <th class="num">Total</th><th>Status</th><th></th>
+            </tr>
+          </thead>
+          <tbody id="bookingRows"></tbody>
+        </table>
+      </div>
+      <div id="bookingEmpty"></div>
+    </div>
+
+    <!-- Walk-in form -->
+    <div class="panel mt-3" id="newBookingPanel" hidden>
+      <h3>New walk-in booking</h3>
+      <form class="form-grid" id="walkinForm" novalidate>
+        <div class="field"><label for="w-name">Guest name</label><input class="input" id="w-name" type="text"></div>
+        <div class="field"><label for="w-email">Email</label><input class="input" id="w-email" type="email"></div>
+        <div class="field"><label for="w-phone">Phone</label><input class="input" id="w-phone" type="tel"></div>
+        <div class="field"><label for="w-guests">Guests</label>
+          <select class="input" id="w-guests"><option>1</option><option selected>2</option><option>3</option><option>4</option></select>
+        </div>
+        <div class="field"><label for="w-in">Check in</label><input class="input" id="w-in" type="date"></div>
+        <div class="field"><label for="w-out">Check out</label><input class="input" id="w-out" type="date"></div>
+        <div class="field"><label for="w-type">Room type</label><select class="input" id="w-type"></select></div>
+        <div class="field"><label for="w-offer">Offer code</label><input class="input" id="w-offer" type="text" placeholder="optional"></div>
+        <div class="col-span" id="walkinNotice"></div>
+        <div class="col-span row">
+          <button class="btn btn--primary" type="submit">Create booking</button>
+          <button class="btn btn--ghost" type="button" id="walkinCancel">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ---------- Rooms ---------- -->
+  <section class="tabpanel" id="tab-rooms" role="tabpanel" hidden>
+    <div class="panel">
+      <div class="between" style="margin-bottom:14px">
+        <h3 style="margin:0">Room inventory</h3>
+        <span class="small muted" id="roomCount"></span>
+      </div>
+
+      <form class="form-grid" id="addRoomForm" style="margin-bottom:22px" novalidate>
+        <div class="field"><label for="r-number">Room number</label><input class="input" id="r-number" type="text" placeholder="e.g. 207"></div>
+        <div class="field"><label for="r-type">Room type</label><select class="input" id="r-type"></select></div>
+        <div class="field"><label for="r-status">Status</label>
+          <select class="input" id="r-status">
+            <option value="available">Available</option>
+            <option value="maintenance">Maintenance</option>
+            <option value="offline">Out of service</option>
+          </select>
+        </div>
+        <div class="field"><label for="r-note">Note</label><input class="input" id="r-note" type="text" placeholder="optional"></div>
+        <div class="col-span" id="roomNotice"></div>
+        <div class="col-span"><button class="btn btn--primary" type="submit">Add room</button></div>
+      </form>
+
+      <div class="table-scroll">
+        <table class="data">
+          <thead>
+            <tr><th>Room</th><th>Type</th><th class="num">Floor</th><th>Status</th><th>Tonight</th><th>Note</th><th></th></tr>
+          </thead>
+          <tbody id="roomRows"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- Rates ---------- -->
+  <section class="tabpanel" id="tab-rates" role="tabpanel" hidden>
+    <div class="panel">
+      <h3>Room types &amp; rates</h3>
+      <p class="small muted">Changing a rate affects new bookings only — bookings already made keep the price they were quoted.</p>
+      <div class="table-scroll mt-2">
+        <table class="data">
+          <thead>
+            <tr><th>Code</th><th>Name</th><th class="num">Rate / night (৳)</th><th class="num">Sleeps</th><th class="num">Size m²</th><th class="num">Rooms</th><th></th></tr>
+          </thead>
+          <tbody id="rateRows"></tbody>
+        </table>
+      </div>
+      <div id="rateNotice" class="mt-2"></div>
+    </div>
+  </section>
+
+  <!-- ---------- Data ---------- -->
+  <section class="tabpanel" id="tab-data" role="tabpanel" hidden>
+    <div class="panel">
+      <h3>Where this data lives</h3>
+      <p class="small">
+        Everything you see here is stored in <code>localStorage</code> in this browser — there is no server behind it.
+        That is what makes the demo work on GitHub Pages, and also what makes it a demo: the data is not shared
+        between devices, and clearing your browser data wipes it. The README explains how to swap in a real
+        backend (Firebase, Supabase or your own API) without rewriting the front end.
+      </p>
+      <div class="row mt-2">
+        <button class="btn btn--ghost btn--sm" type="button" id="exportBtn">Export all data (JSON)</button>
+        <button class="btn btn--ghost btn--sm" type="button" id="reseedBtn">Reset to demo data</button>
+      </div>
+      <div id="dataNotice" class="mt-2"></div>
+    </div>
+
+    <div class="panel mt-3">
+      <h3>Storage snapshot</h3>
+      <pre id="dump" style="background:var(--surface-2);padding:14px;border-radius:10px;overflow:auto;max-height:340px;font-size:.78rem"></pre>
+    </div>
+  </section>
+
+</main>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/admin.js"></script>
+</body>
+</html>

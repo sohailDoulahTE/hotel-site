@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Invoice — Aurelia Hotel, Dhaka</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+  body { background: var(--surface-2); }
+
+  .sheet {
+    background: #fff;
+    max-width: 820px;
+    margin: 32px auto;
+    padding: 46px 48px 38px;
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    box-shadow: var(--shadow);
+  }
+  @media (max-width: 640px) { .sheet { padding: 26px 20px; margin: 16px; } }
+
+  .inv-head { display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap;
+              padding-bottom: 24px; border-bottom: 2px solid var(--ink); }
+  .inv-title { text-align: right; }
+  .inv-title h1 { font-size: 1.9rem; margin: 0 0 4px; letter-spacing: .02em; }
+
+  .inv-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; padding: 24px 0; }
+  @media (max-width: 560px) { .inv-meta { grid-template-columns: 1fr; } }
+  .inv-meta .label { display: block; margin-bottom: 4px; }
+
+  .totals { margin-left: auto; width: min(340px, 100%); margin-top: 18px; }
+  .totals .sum-line { display: flex; justify-content: space-between; padding: 7px 0; font-size: .95rem; }
+  .totals .grand { border-top: 2px solid var(--ink); margin-top: 8px; padding-top: 12px;
+                   font-size: 1.22rem; font-weight: 800; color: var(--ink); }
+
+  .stamp { display: inline-block; border: 3px solid currentColor; border-radius: 10px;
+           padding: 6px 16px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase;
+           transform: rotate(-6deg); font-size: 1rem; }
+  .stamp--paid { color: var(--ok); }
+  .stamp--due  { color: var(--bad); }
+
+  .inv-foot { margin-top: 34px; padding-top: 18px; border-top: 1px solid var(--line);
+              font-size: .83rem; color: var(--muted); }
+
+  @media print {
+    body { background: #fff; }
+    .sheet { box-shadow: none; border: 0; margin: 0; max-width: none; padding: 0; }
+    @page { margin: 16mm; }
+  }
+</style>
+</head>
+<body>
+
+<div class="no-print" style="background:#fff;border-bottom:1px solid var(--line)">
+  <div class="wrap row" style="min-height:62px;gap:10px">
+    <a class="brand" href="index.html" style="margin-right:auto">
+      <span class="brand__mark">A</span>
+      <span><span class="brand__name">Aurelia</span><span class="brand__sub">Gulshan · Dhaka</span></span>
+    </a>
+    <button class="btn btn--primary btn--sm" type="button" onclick="window.print()">Print / save as PDF</button>
+    <a class="btn btn--ghost btn--sm" href="booking.html">Bookings</a>
+    <a class="btn btn--ghost btn--sm" href="admin.html">Admin</a>
+  </div>
+</div>
+
+<main id="invoiceHost"></main>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/main.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const host = qs('#invoiceHost');
+  const ref  = param('ref').toUpperCase();
+  const b    = ref ? DB.booking(ref) : null;
+
+  if (!b) {
+    host.innerHTML = `
+      <div class="sheet">
+        <h1 style="font-size:1.5rem">Invoice not found</h1>
+        <p class="muted">${ref
+          ? `There is no booking with reference <strong>${ref}</strong> in this browser.`
+          : 'No booking reference was given.'}</p>
+        <p class="small muted">Bookings in this demo live in the browser that made them, so an invoice created
+        on another device or in a private window will not appear here.</p>
+        <p class="mt-2">
+          <a class="btn btn--primary btn--sm" href="booking.html">Make a booking</a>
+          <a class="btn btn--ghost btn--sm" href="admin.html">Open the admin panel</a>
+        </p>
+      </div>`;
+    return;
+  }
+
+  const invNo = 'INV-' + b.ref.replace('AUR-', '');
+  const issued = prettyDateTime(b.createdAt);
+  const cancelled = b.status === 'cancelled';
+
+  const stamp = cancelled
+    ? '<span class="stamp stamp--due">Cancelled</span>'
+    : (b.paid ? '<span class="stamp stamp--paid">Paid</span>'
+              : '<span class="stamp stamp--due">Due</span>');
+
+  const offerRow = b.discount > 0 ? `
+    <tr>
+      <td>Offer <strong>${b.offerCode}</strong> applied to the room rate</td>
+      <td class="num">—</td>
+      <td class="num" style="color:var(--ok)">−${moneyTk(b.discount)}</td>
+    </tr>` : '';
+
+  host.innerHTML = `
+    <article class="sheet">
+
+      <header class="inv-head">
+        <div>
+          <div class="brand" style="margin-bottom:10px">
+            <span class="brand__mark">A</span>
+            <span><span class="brand__name">Aurelia</span><span class="brand__sub">Hotel &amp; Residence</span></span>
+          </div>
+          <p class="small muted" style="margin:0">
+            House 42, Road 11, Gulshan 2<br>
+            Dhaka 1212, Bangladesh<br>
+            +880 1700 000000<br>
+            stay@aurelia-demo.example<br>
+            BIN 000000000-0000 (demo)
+          </p>
+        </div>
+        <div class="inv-title">
+          <h1 class="display">Invoice</h1>
+          <p class="small muted" style="margin:0">
+            <strong>${invNo}</strong><br>
+            Booking ${b.ref}<br>
+            Issued ${issued}
+          </p>
+          <p style="margin:14px 0 0">${stamp}</p>
+        </div>
+      </header>
+
+      <section class="inv-meta">
+        <div>
+          <span class="label">Billed to</span>
+          <strong>${b.guest.name || 'Guest'}</strong><br>
+          <span class="small muted">
+            ${b.guest.email || ''}${b.guest.email && b.guest.phone ? '<br>' : ''}${b.guest.phone || ''}
+          </span>
+        </div>
+        <div>
+          <span class="label">Stay</span>
+          <strong>${b.typeName} · Room ${b.roomNumber}</strong><br>
+          <span class="small muted">
+            ${prettyDate(b.checkIn)} → ${prettyDate(b.checkOut)}<br>
+            ${b.nights} night${b.nights > 1 ? 's' : ''} · ${b.guests} guest${b.guests > 1 ? 's' : ''}<br>
+            Check-in ${HOTEL.checkIn} · Check-out ${HOTEL.checkOut}
+          </span>
+        </div>
+      </section>
+
+      <div class="table-scroll">
+        <table class="data" style="min-width:0">
+          <thead>
+            <tr>
+              <th>Description</th>
+              <th class="num">Qty</th>
+              <th class="num">Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <strong>${b.typeName}</strong> — room ${b.roomNumber}<br>
+                <span class="small muted">${moneyTk(b.rate)} per night</span>
+              </td>
+              <td class="num">${b.nights}</td>
+              <td class="num">${moneyTk(b.roomTotal)}</td>
+            </tr>
+            ${offerRow}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="totals">
+        <div class="sum-line"><span>Subtotal</span><span>${moneyTk(b.roomTotal - b.discount)}</span></div>
+        <div class="sum-line"><span>Service charge (10%)</span><span>${moneyTk(b.service)}</span></div>
+        <div class="sum-line"><span>VAT (15%)</span><span>${moneyTk(b.vat)}</span></div>
+        <div class="sum-line grand"><span>${cancelled ? 'Cancelled total' : (b.paid ? 'Paid' : 'Amount due')}</span>
+          <span>${moneyTk(b.total)}</span></div>
+      </div>
+
+      ${b.guest.notes ? `<p class="small muted mt-3"><strong>Notes:</strong> ${b.guest.notes}</p>` : ''}
+
+      <footer class="inv-foot">
+        <p style="margin:0 0 6px"><strong>Payment</strong> — settle at the front desk on departure.
+        We take cash, bKash, Visa, Mastercard and AmEx. Bank transfer details on request.</p>
+        <p style="margin:0 0 6px"><strong>Cancellation</strong> — free up to 48 hours before check-in;
+        one night is charged inside that window.</p>
+        <p style="margin:0">This invoice was generated by the Aurelia demo booking system.
+        Aurelia is a fictional hotel and this document has no commercial or legal standing.</p>
+      </footer>
+
+    </article>
+
+    <p class="center small muted no-print" style="margin:0 0 40px">
+      Tip: in the print dialog choose <em>Save as PDF</em> to keep a copy.
+    </p>`;
+});
+</script>
+</body>
+</html>

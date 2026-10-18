@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aurelia — Boutique Hotel &amp; Residence, Gulshan, Dhaka</title>
+<meta name="description" content="Aurelia is a 25-room boutique hotel in Gulshan 2, Dhaka. Check live room availability, book instantly and receive your invoice straight away.">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<div class="demo-flag">Demo project — rooms, bookings and invoices are stored in your own browser, not on a server.</div>
+
+<header class="site-header">
+  <nav class="wrap nav" aria-label="Main">
+    <a class="brand" href="index.html">
+      <span class="brand__mark">A</span>
+      <span>
+        <span class="brand__name">Aurelia</span>
+        <span class="brand__sub">Gulshan · Dhaka</span>
+      </span>
+    </a>
+    <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="Menu"><span></span></button>
+    <div class="nav__links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="rooms.html">Rooms &amp; rates</a>
+      <a href="dining.html">Dining</a>
+      <a href="offers.html">Offers</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="contact.html">Contact</a>
+      <a class="btn btn--primary btn--sm" href="booking.html">Book now</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+
+  <!-- ================= HERO ================= -->
+  <section class="hero">
+    <div class="hero__media" style="background-image:url('assets/img/hero.svg')"></div>
+    <div class="wrap hero__inner">
+      <p class="eyebrow">Gulshan 2 · Dhaka</p>
+      <h1>A quiet address in the middle of everything</h1>
+      <p>Twenty-five rooms and suites, a courtyard garden, and a kitchen that takes breakfast seriously. Five minutes from Gulshan Circle, and far enough back from the road to actually sleep.</p>
+      <div class="hero__actions">
+        <a class="btn btn--primary" href="booking.html">Check availability</a>
+        <a class="btn btn--light" href="rooms.html">See the rooms</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= AVAILABILITY SEARCH ================= -->
+  <section class="wrap">
+    <form class="bookbar bookbar--float" id="searchForm" novalidate>
+      <div class="field">
+        <label for="q-in">Check in</label>
+        <input class="input" type="date" id="q-in" required>
+      </div>
+      <div class="field">
+        <label for="q-out">Check out</label>
+        <input class="input" type="date" id="q-out" required>
+      </div>
+      <div class="field">
+        <label for="q-guests">Guests</label>
+        <select class="input" id="q-guests">
+          <option value="1">1 guest</option>
+          <option value="2" selected>2 guests</option>
+          <option value="3">3 guests</option>
+          <option value="4">4 guests</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="q-type">Room type</label>
+        <select class="input" id="q-type">
+          <option value="">Any room type</option>
+        </select>
+      </div>
+      <button class="btn btn--primary" type="submit">Search</button>
+    </form>
+  </section>
+
+  <section class="section" style="padding-top:38px">
+    <div class="wrap">
+      <div id="searchResults"></div>
+    </div>
+  </section>
+
+  <!-- ================= WHY ================= -->
+  <section class="section section--tint">
+    <div class="wrap">
+      <div class="center" style="margin-bottom:34px">
+        <p class="eyebrow">Why guests come back</p>
+        <h2 class="display">Small enough to remember your name</h2>
+        <p class="lede">We run twenty-five keys, not three hundred. That changes what a stay feels like.</p>
+      </div>
+      <div class="grid grid--4">
+        <div class="feature">
+          <div class="feature__icon">✦</div>
+          <h3>Instant confirmation</h3>
+          <p>Pick your dates, see what is actually free tonight, and hold the room in under a minute.</p>
+        </div>
+        <div class="feature">
+          <div class="feature__icon">☕</div>
+          <h3>Breakfast until 11</h3>
+          <p>Cooked to order in the courtyard — bhuna khichuri, eggs any way, and proper coffee.</p>
+        </div>
+        <div class="feature">
+          <div class="feature__icon">⌁</div>
+          <h3>Work that works</h3>
+          <p>Fibre throughout, a desk in every room, and two meeting rooms you can book by the hour.</p>
+        </div>
+        <div class="feature">
+          <div class="feature__icon">✈</div>
+          <h3>Airport in 40 min</h3>
+          <p>Complimentary transfer on suite bookings; arranged on request for everyone else.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ROOMS PREVIEW ================= -->
+  <section class="section">
+    <div class="wrap">
+      <div class="between" style="margin-bottom:26px">
+        <div>
+          <p class="eyebrow">Where you'll stay</p>
+          <h2 class="display mb-0">Rooms &amp; suites</h2>
+        </div>
+        <a class="btn btn--ghost" href="rooms.html">All rooms &amp; rates</a>
+      </div>
+      <div class="grid grid--3" id="roomPreview"></div>
+    </div>
+  </section>
+
+  <!-- ================= DINING STRIP ================= -->
+  <section class="section section--tint">
+    <div class="wrap split">
+      <div>
+        <p class="eyebrow">Courtyard &amp; Co.</p>
+        <h2 class="display">Dinner under the mango tree</h2>
+        <p>Our kitchen is open to the garden from seven in the morning until half past ten at night. The menu is short and changes with whatever came in from Karwan Bazar that morning — a handful of Bengali classics, a handful of things our chef picked up in Penang, and a bar that takes its limes seriously.</p>
+        <p class="muted small">Open to non-residents. Reservations recommended Thursday to Saturday.</p>
+        <a class="btn btn--primary mt-2" href="dining.html">See the menu</a>
+      </div>
+      <div class="media-frame" style="background-image:url('assets/img/dining.svg')"></div>
+    </div>
+  </section>
+
+  <!-- ================= OFFERS ================= -->
+  <section class="section">
+    <div class="wrap">
+      <div class="center" style="margin-bottom:30px">
+        <p class="eyebrow">Current offers</p>
+        <h2 class="display">Book direct, pay less</h2>
+      </div>
+      <div class="grid grid--3" id="offerPreview"></div>
+      <p class="center mt-3"><a class="btn btn--ghost" href="offers.html">All offers &amp; packages</a></p>
+    </div>
+  </section>
+
+  <!-- ================= CTA ================= -->
+  <section class="section section--tint">
+    <div class="wrap center">
+      <h2 class="display">Ready when you are</h2>
+      <p class="lede">Live availability, instant confirmation, and an invoice in your inbox before you have closed the tab.</p>
+      <p class="mt-2"><a class="btn btn--primary" href="booking.html">Check availability</a></p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="brand" style="color:#fff;margin-bottom:12px">
+          <span class="brand__mark">A</span>
+          <span><span class="brand__name">Aurelia</span><span class="brand__sub">Gulshan · Dhaka</span></span>
+        </div>
+        <p>House 42, Road 11, Gulshan 2<br>Dhaka 1212, Bangladesh</p>
+        <p>+880 1700 000000<br><a href="mailto:stay@aurelia-demo.example">stay@aurelia-demo.example</a></p>
+      </div>
+      <div>
+        <h4>Stay</h4>
+        <ul>
+          <li><a href="rooms.html">Rooms &amp; rates</a></li>
+          <li><a href="booking.html">Book a room</a></li>
+          <li><a href="offers.html">Offers &amp; packages</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Hotel</h4>
+        <ul>
+          <li><a href="dining.html">Dining</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="admin.html">Staff login</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Front desk</h4>
+        <p>Check-in from 14:00<br>Check-out by 12:00<br>Reception staffed 24 hours</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year">2026</span> Aurelia Hotel — a fictional hotel, built as a demo project.</span>
+      <span>Hosted on GitHub Pages</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/ui.js"></script>
+<script src="assets/js/home.js"></script>
+</body>
+</html>

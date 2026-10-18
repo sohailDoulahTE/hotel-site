@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact &amp; Enquiries — Aurelia Hotel, Dhaka</title>
+<meta name="description" content="Find Aurelia Hotel in Gulshan 2, Dhaka. Send an enquiry, reserve a table or ask about an event.">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<div class="demo-flag">Demo project — rooms, bookings and invoices are stored in your own browser, not on a server.</div>
+
+<header class="site-header">
+  <nav class="wrap nav" aria-label="Main">
+    <a class="brand" href="index.html">
+      <span class="brand__mark">A</span>
+      <span><span class="brand__name">Aurelia</span><span class="brand__sub">Gulshan · Dhaka</span></span>
+    </a>
+    <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="Menu"><span></span></button>
+    <div class="nav__links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="rooms.html">Rooms &amp; rates</a>
+      <a href="dining.html">Dining</a>
+      <a href="offers.html">Offers</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="contact.html">Contact</a>
+      <a class="btn btn--primary btn--sm" href="booking.html">Book now</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+
+  <section class="page-head">
+    <div class="wrap">
+      <p class="eyebrow">Get in touch</p>
+      <h1 class="display">Contact</h1>
+      <p class="lede">Reception answers around the clock. For anything that is not a room booking — a table, an event, a long stay — the form below reaches the duty manager.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap split">
+
+      <div class="panel">
+        <h2 style="font-size:1.4rem">Send an enquiry</h2>
+        <div id="formNotice"></div>
+        <!--
+          ============================================================
+          HOW TO MAKE THIS FORM ACTUALLY SEND EMAIL
+          ------------------------------------------------------------
+          GitHub Pages cannot run server code, so a plain <form> has
+          nowhere to post to. Use a free form relay:
+
+            1. Sign up at https://formspree.io (free tier is fine).
+            2. Create a form; it gives you an endpoint that looks like
+               https://formspree.io/f/abcdwxyz
+            3. Replace FORMSPREE_ENDPOINT below with it.
+            4. Delete the data-demo="true" attribute.
+
+          Alternatives that work the same way: Web3Forms, Getform,
+          Basin, or a Google Form embedded in an iframe.
+          ============================================================
+        -->
+        <form id="enquiryForm" class="form-grid" style="margin-top:18px"
+              action="FORMSPREE_ENDPOINT" method="POST" data-demo="true" novalidate>
+          <div class="field">
+            <label for="c-name">Your name</label>
+            <input class="input" id="c-name" name="name" type="text" required autocomplete="name">
+          </div>
+          <div class="field">
+            <label for="c-email">Email</label>
+            <input class="input" id="c-email" name="email" type="email" required autocomplete="email">
+          </div>
+          <div class="field">
+            <label for="c-phone">Phone (optional)</label>
+            <input class="input" id="c-phone" name="phone" type="tel" autocomplete="tel">
+          </div>
+          <div class="field">
+            <label for="c-topic">What is it about?</label>
+            <select class="input" id="c-topic" name="topic">
+              <option>A room booking</option>
+              <option>A table at Courtyard &amp; Co.</option>
+              <option>An event or private dining</option>
+              <option>A long stay or corporate rate</option>
+              <option>Something else</option>
+            </select>
+          </div>
+          <div class="field col-span">
+            <label for="c-msg">Message</label>
+            <textarea class="input" id="c-msg" name="message" required
+                      placeholder="Dates, number of guests, anything we should know."></textarea>
+          </div>
+          <div class="col-span">
+            <button class="btn btn--primary btn--block" type="submit">Send enquiry</button>
+            <p class="hint mt-2" style="margin-bottom:0">We reply within a few hours, usually sooner.</p>
+          </div>
+        </form>
+      </div>
+
+      <div class="stack">
+        <div class="panel">
+          <h3>Aurelia Hotel &amp; Residence</h3>
+          <p class="small" style="margin-bottom:6px">House 42, Road 11<br>Gulshan 2, Dhaka 1212<br>Bangladesh</p>
+          <p class="small" style="margin:0">
+            Reception <a href="tel:+8801700000000">+880 1700 000000</a><br>
+            Reservations <a href="mailto:stay@aurelia-demo.example">stay@aurelia-demo.example</a><br>
+            Events <a href="mailto:events@aurelia-demo.example">events@aurelia-demo.example</a>
+          </p>
+        </div>
+
+        <div class="panel">
+          <h3>Getting here</h3>
+          <ul class="small muted" style="margin:0;padding-left:18px;display:grid;gap:6px">
+            <li><strong>From Hazrat Shahjalal Airport</strong> — 40 minutes outside peak, about 13 km. Transfers ৳2,500 each way.</li>
+            <li><strong>From Gulshan Circle 2</strong> — a five-minute walk down Road 11.</li>
+            <li><strong>Parking</strong> — eight covered spaces, free for residents.</li>
+          </ul>
+        </div>
+
+        <div class="panel" style="padding:0;overflow:hidden">
+          <!--
+            Swap this block for a real Google Maps embed:
+            Maps → search the address → Share → Embed a map → copy the <iframe>.
+          -->
+          <div style="aspect-ratio:4/3;background:url('assets/img/g-street.svg') center/cover;position:relative">
+            <div style="position:absolute;inset:auto 0 0 0;background:rgba(255,255,255,.94);padding:14px 16px">
+              <strong class="small">Map placeholder</strong>
+              <p class="small muted" style="margin:2px 0 0">Paste a Google Maps embed iframe here — the comment in the HTML shows where.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="brand" style="color:#fff;margin-bottom:12px">
+          <span class="brand__mark">A</span>
+          <span><span class="brand__name">Aurelia</span><span class="brand__sub">Gulshan · Dhaka</span></span>
+        </div>
+        <p>House 42, Road 11, Gulshan 2<br>Dhaka 1212, Bangladesh</p>
+        <p>+880 1700 000000<br><a href="mailto:stay@aurelia-demo.example">stay@aurelia-demo.example</a></p>
+      </div>
+      <div>
+        <h4>Stay</h4>
+        <ul>
+          <li><a href="rooms.html">Rooms &amp; rates</a></li>
+          <li><a href="booking.html">Book a room</a></li>
+          <li><a href="offers.html">Offers &amp; packages</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Hotel</h4>
+        <ul>
+          <li><a href="dining.html">Dining</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="admin.html">Staff login</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Front desk</h4>
+        <p>Check-in from 14:00<br>Check-out by 12:00<br>Reception staffed 24 hours</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year">2026</span> Aurelia Hotel — a fictional hotel, built as a demo project.</span>
+      <span>Hosted on GitHub Pages</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/main.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const form = qs('#enquiryForm');
+  const notice = qs('#formNotice');
+
+  form.addEventListener('submit', e => {
+    const name = qs('#c-name').value.trim();
+    const email = qs('#c-email').value.trim();
+    const msg = qs('#c-msg').value.trim();
+
+    if (!name || !email || !msg) {
+      e.preventDefault();
+      showNotice(notice, 'bad', '<span>⚠</span><span>Please fill in your name, email and message.</span>');
+      return;
+    }
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+      e.preventDefault();
+      showNotice(notice, 'bad', '<span>⚠</span><span>That email address does not look right.</span>');
+      return;
+    }
+
+    // Demo mode: no endpoint configured yet, so don't actually submit.
+    if (form.dataset.demo === 'true') {
+      e.preventDefault();
+      showNotice(notice, 'ok',
+        '<span>✓</span><span><strong>Thanks, ' + name.replace(/[<>]/g, '') + '.</strong> ' +
+        'In the demo nothing is sent — connect a Formspree endpoint in <code>contact.html</code> ' +
+        'and this form will email you for real.</span>');
+      form.reset();
+    }
+  });
+});
+</script>
+</body>
+</html>

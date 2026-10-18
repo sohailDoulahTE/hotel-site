@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gallery — Aurelia Hotel, Dhaka</title>
+<meta name="description" content="The lobby, courtyard, pool, spa and suites at Aurelia Hotel, Gulshan 2, Dhaka.">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+  /* Lightbox */
+  .lb { position: fixed; inset: 0; background: rgba(8,16,20,.88); display: none;
+        align-items: center; justify-content: center; z-index: 200; padding: 24px; }
+  .lb.is-open { display: flex; }
+  .lb img { max-width: min(1000px, 92vw); max-height: 84vh; border-radius: 14px; box-shadow: 0 30px 80px rgba(0,0,0,.5); }
+  .lb__cap { position: absolute; bottom: 26px; left: 0; right: 0; text-align: center; color: #e6eef0; font-size: .95rem; }
+  .lb__close { position: absolute; top: 18px; right: 20px; background: rgba(255,255,255,.14);
+               border: 1px solid rgba(255,255,255,.4); color: #fff; width: 44px; height: 44px;
+               border-radius: 50%; font-size: 1.3rem; cursor: pointer; }
+  .gallery figure { cursor: zoom-in; position: relative; }
+  .gallery figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 26px 14px 12px;
+                        color: #fff; font-size: .85rem; font-weight: 600;
+                        background: linear-gradient(transparent, rgba(8,20,24,.75)); }
+</style>
+</head>
+<body>
+
+<div class="demo-flag">Demo project — rooms, bookings and invoices are stored in your own browser, not on a server.</div>
+
+<header class="site-header">
+  <nav class="wrap nav" aria-label="Main">
+    <a class="brand" href="index.html">
+      <span class="brand__mark">A</span>
+      <span><span class="brand__name">Aurelia</span><span class="brand__sub">Gulshan · Dhaka</span></span>
+    </a>
+    <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="Menu"><span></span></button>
+    <div class="nav__links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="rooms.html">Rooms &amp; rates</a>
+      <a href="dining.html">Dining</a>
+      <a href="offers.html">Offers</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="contact.html">Contact</a>
+      <a class="btn btn--primary btn--sm" href="booking.html">Book now</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+
+  <section class="page-head">
+    <div class="wrap">
+      <p class="eyebrow">Gallery</p>
+      <h1 class="display">A look around</h1>
+      <p class="lede">Click any image to enlarge it. These are placeholder illustrations — drop your own photographs into <code>assets/img/</code> under the same filenames and the site picks them up.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="gallery" id="gallery"></div>
+    </div>
+  </section>
+
+  <section class="section section--tint">
+    <div class="wrap center">
+      <h2 class="display">Come and see it properly</h2>
+      <p class="lede">Rooms from ৳9,500 a night, with instant confirmation.</p>
+      <p class="mt-2"><a class="btn btn--primary" href="booking.html">Check availability</a></p>
+    </div>
+  </section>
+
+</main>
+
+<div class="lb" id="lightbox" role="dialog" aria-modal="true" aria-label="Enlarged image">
+  <button class="lb__close" type="button" id="lbClose" aria-label="Close">×</button>
+  <img id="lbImg" src="" alt="">
+  <p class="lb__cap" id="lbCap"></p>
+</div>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="brand" style="color:#fff;margin-bottom:12px">
+          <span class="brand__mark">A</span>
+          <span><span class="brand__name">Aurelia</span><span class="brand__sub">Gulshan · Dhaka</span></span>
+        </div>
+        <p>House 42, Road 11, Gulshan 2<br>Dhaka 1212, Bangladesh</p>
+        <p>+880 1700 000000<br><a href="mailto:stay@aurelia-demo.example">stay@aurelia-demo.example</a></p>
+      </div>
+      <div>
+        <h4>Stay</h4>
+        <ul>
+          <li><a href="rooms.html">Rooms &amp; rates</a></li>
+          <li><a href="booking.html">Book a room</a></li>
+          <li><a href="offers.html">Offers &amp; packages</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Hotel</h4>
+        <ul>
+          <li><a href="dining.html">Dining</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="admin.html">Staff login</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Front desk</h4>
+        <p>Check-in from 14:00<br>Check-out by 12:00<br>Reception staffed 24 hours</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year">2026</span> Aurelia Hotel — a fictional hotel, built as a demo project.</span>
+      <span>Hosted on GitHub Pages</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/main.js"></script>
+<script>
+const SHOTS = [
+  { src: 'assets/img/g-lobby.svg',   cap: 'The lobby, looking into the courtyard', wide: true },
+  { src: 'assets/img/g-pool.svg',    cap: 'Rooftop lap pool, open 06:00 – 21:00' },
+  { src: 'assets/img/g-spa.svg',     cap: 'Treatment room, lower ground floor' },
+  { src: 'assets/img/g-terrace.svg', cap: 'The courtyard garden at dusk' },
+  { src: 'assets/img/g-suite.svg',   cap: 'Junior Suite, fifth floor' },
+  { src: 'assets/img/g-bath.svg',    cap: 'Garden Suite bathroom' },
+  { src: 'assets/img/g-gym.svg',     cap: 'The gym, open 24 hours to residents' },
+  { src: 'assets/img/g-street.svg',  cap: 'Road 11, Gulshan 2', wide: true },
+  { src: 'assets/img/room-deluxe.svg',       cap: 'Deluxe King' },
+  { src: 'assets/img/room-twin.svg',         cap: 'Executive Twin' },
+  { src: 'assets/img/room-garden.svg',       cap: 'Garden Suite' },
+  { src: 'assets/img/room-presidential.svg', cap: 'Presidential Suite' }
+];
+
+document.addEventListener('DOMContentLoaded', () => {
+  const host = qs('#gallery');
+  SHOTS.forEach(s => {
+    const fig = el('figure', { class: s.wide ? 'is-wide' : '', tabindex: '0', role: 'button' });
+    fig.style.backgroundImage = `url('${s.src}')`;
+    fig.innerHTML = `<figcaption>${s.cap}</figcaption>`;
+    const open = () => {
+      qs('#lbImg').src = s.src;
+      qs('#lbImg').alt = s.cap;
+      qs('#lbCap').textContent = s.cap;
+      qs('#lightbox').classList.add('is-open');
+    };
+    fig.addEventListener('click', open);
+    fig.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(); } });
+    host.appendChild(fig);
+  });
+
+  const close = () => qs('#lightbox').classList.remove('is-open');
+  qs('#lbClose').addEventListener('click', close);
+  qs('#lightbox').addEventListener('click', e => { if (e.target.id === 'lightbox') close(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+});
+</script>
+</body>
+</html>

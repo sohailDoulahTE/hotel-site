@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Book a Room — Aurelia Hotel, Dhaka</title>
+<meta name="description" content="Check live availability and book a room at Aurelia Hotel, Gulshan 2, Dhaka. Instant confirmation and an invoice straight away.">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+  .booking-layout { display: grid; grid-template-columns: 1.55fr 1fr; gap: 28px; align-items: start; }
+  @media (max-width: 920px) { .booking-layout { grid-template-columns: 1fr; } }
+  .summary { position: sticky; top: 90px; }
+  .sum-line { display: flex; justify-content: space-between; gap: 14px; font-size: .94rem; padding: 7px 0; }
+  .sum-line--total { border-top: 1px solid var(--line); margin-top: 8px; padding-top: 14px;
+                     font-size: 1.12rem; font-weight: 800; color: var(--ink); }
+  .step { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+  .step__num { width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: #fff;
+               display: grid; place-items: center; font-weight: 800; font-size: .86rem; flex: none; }
+  .step h2 { margin: 0; font-size: 1.22rem; }
+  .pick { display: grid; gap: 10px; }
+  .pick label {
+    display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: center;
+    border: 1px solid var(--line); border-radius: var(--r); padding: 14px 16px; cursor: pointer;
+    background: #fff; transition: border-color .15s ease, box-shadow .15s ease;
+  }
+  .pick label:hover { border-color: #b9c6cd; }
+  .pick input:checked + .pick__body { color: inherit; }
+  .pick label:has(input:checked) { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+  .pick label.is-out { opacity: .5; cursor: not-allowed; }
+  .pick__body strong { display: block; color: var(--ink); }
+</style>
+</head>
+<body>
+
+<div class="demo-flag">Demo project — rooms, bookings and invoices are stored in your own browser, not on a server.</div>
+
+<header class="site-header">
+  <nav class="wrap nav" aria-label="Main">
+    <a class="brand" href="index.html">
+      <span class="brand__mark">A</span>
+      <span><span class="brand__name">Aurelia</span><span class="brand__sub">Gulshan · Dhaka</span></span>
+    </a>
+    <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="Menu"><span></span></button>
+    <div class="nav__links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="rooms.html">Rooms &amp; rates</a>
+      <a href="dining.html">Dining</a>
+      <a href="offers.html">Offers</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="contact.html">Contact</a>
+      <a class="btn btn--primary btn--sm" href="booking.html">Book now</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+
+  <section class="page-head">
+    <div class="wrap">
+      <p class="eyebrow">Reservations</p>
+      <h1 class="display">Book a room</h1>
+      <p class="lede">Pick your dates, choose from what is actually free, and we will assign your room number straight away.</p>
+    </div>
+  </section>
+
+  <!-- ===== Confirmation (hidden until a booking is made) ===== -->
+  <section class="section" id="confirmSection" hidden>
+    <div class="wrap">
+      <div class="panel" style="border-color:#bfe6d2;background:var(--ok-soft)">
+        <span class="badge badge--ok">Confirmed</span>
+        <h2 class="display mt-2" id="confirmTitle">Your room is held</h2>
+        <div id="confirmBody"></div>
+        <div class="row mt-3 no-print">
+          <a class="btn btn--primary" id="confirmInvoice" href="#">View &amp; print invoice</a>
+          <a class="btn btn--ghost" href="booking.html">Make another booking</a>
+          <a class="btn btn--ghost" href="index.html">Back to the hotel</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== Booking form ===== -->
+  <section class="section" id="bookingSection">
+    <div class="wrap booking-layout">
+
+      <div class="stack" style="gap:24px">
+
+        <!-- Step 1 — dates -->
+        <div class="panel">
+          <div class="step"><span class="step__num">1</span><h2>Your dates</h2></div>
+          <div class="form-grid">
+            <div class="field">
+              <label for="b-in">Check in</label>
+              <input class="input" type="date" id="b-in" required>
+            </div>
+            <div class="field">
+              <label for="b-out">Check out</label>
+              <input class="input" type="date" id="b-out" required>
+            </div>
+            <div class="field">
+              <label for="b-guests">Guests</label>
+              <select class="input" id="b-guests">
+                <option value="1">1 guest</option>
+                <option value="2" selected>2 guests</option>
+                <option value="3">3 guests</option>
+                <option value="4">4 guests</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="b-offer">Offer code (optional)</label>
+              <input class="input" type="text" id="b-offer" placeholder="e.g. STAY3" autocapitalize="characters">
+            </div>
+          </div>
+          <p class="hint mt-2" id="nightsHint"></p>
+        </div>
+
+        <!-- Step 2 — room -->
+        <div class="panel">
+          <div class="step"><span class="step__num">2</span><h2>Choose a room</h2></div>
+          <div id="roomPick" class="pick"></div>
+        </div>
+
+        <!-- Step 3 — details -->
+        <div class="panel">
+          <div class="step"><span class="step__num">3</span><h2>Your details</h2></div>
+          <form id="bookForm" class="form-grid" novalidate>
+            <div class="field">
+              <label for="g-name">Full name</label>
+              <input class="input" id="g-name" type="text" required autocomplete="name">
+            </div>
+            <div class="field">
+              <label for="g-email">Email</label>
+              <input class="input" id="g-email" type="email" required autocomplete="email">
+            </div>
+            <div class="field">
+              <label for="g-phone">Phone</label>
+              <input class="input" id="g-phone" type="tel" required autocomplete="tel">
+            </div>
+            <div class="field">
+              <label for="g-arrival">Estimated arrival</label>
+              <select class="input" id="g-arrival">
+                <option>14:00 – 17:00</option>
+                <option>17:00 – 20:00</option>
+                <option>20:00 – 23:00</option>
+                <option>After midnight</option>
+                <option>Early arrival requested</option>
+              </select>
+            </div>
+            <div class="field col-span">
+              <label for="g-notes">Anything we should know? (optional)</label>
+              <textarea class="input" id="g-notes" style="min-height:90px"
+                        placeholder="High floor, airport transfer, dietary needs, a package from the offers page…"></textarea>
+            </div>
+            <div class="col-span" id="bookNotice"></div>
+            <div class="col-span">
+              <button class="btn btn--primary btn--block" type="submit" id="bookBtn">Confirm booking</button>
+              <p class="hint mt-2" style="margin-bottom:0">
+                No card is taken — you pay at the hotel. Free cancellation up to 48 hours before arrival.
+              </p>
+            </div>
+          </form>
+        </div>
+
+      </div>
+
+      <!-- Summary -->
+      <aside class="panel summary" id="summary">
+        <h3 style="margin-top:0">Your stay</h3>
+        <div id="summaryBody"></div>
+      </aside>
+
+    </div>
+  </section>
+
+  <!-- ===== Look up an existing booking ===== -->
+  <section class="section section--tint">
+    <div class="wrap">
+      <div class="panel">
+        <h2 style="font-size:1.3rem">Already booked?</h2>
+        <p class="small muted">Enter your reference (it looks like <code>AUR-1001</code>) to see your invoice again.</p>
+        <form class="row" id="lookupForm" style="gap:10px;align-items:flex-end">
+          <div class="field" style="flex:1 1 220px">
+            <label for="lk-ref">Booking reference</label>
+            <input class="input" id="lk-ref" type="text" placeholder="AUR-1001" autocapitalize="characters">
+          </div>
+          <button class="btn btn--ghost" type="submit">Find booking</button>
+        </form>
+        <div id="lookupNotice" class="mt-2"></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="brand" style="color:#fff;margin-bottom:12px">
+          <span class="brand__mark">A</span>
+          <span><span class="brand__name">Aurelia</span><span class="brand__sub">Gulshan · Dhaka</span></span>
+        </div>
+        <p>House 42, Road 11, Gulshan 2<br>Dhaka 1212, Bangladesh</p>
+        <p>+880 1700 000000<br><a href="mailto:stay@aurelia-demo.example">stay@aurelia-demo.example</a></p>
+      </div>
+      <div>
+        <h4>Stay</h4>
+        <ul>
+          <li><a href="rooms.html">Rooms &amp; rates</a></li>
+          <li><a href="booking.html">Book a room</a></li>
+          <li><a href="offers.html">Offers &amp; packages</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Hotel</h4>
+        <ul>
+          <li><a href="dining.html">Dining</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="admin.html">Staff login</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Front desk</h4>
+        <p>Check-in from 14:00<br>Check-out by 12:00<br>Reception staffed 24 hours</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year">2026</span> Aurelia Hotel — a fictional hotel, built as a demo project.</span>
+      <span>Hosted on GitHub Pages</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/ui.js"></script>
+<script src="assets/js/booking.js"></script>
+</body>
+</html>

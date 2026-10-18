@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rooms &amp; Rates — Aurelia Hotel, Dhaka</title>
+<meta name="description" content="Five room types from Deluxe King to the Presidential Suite, with live availability and nightly rates in BDT.">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<div class="demo-flag">Demo project — rooms, bookings and invoices are stored in your own browser, not on a server.</div>
+
+<header class="site-header">
+  <nav class="wrap nav" aria-label="Main">
+    <a class="brand" href="index.html">
+      <span class="brand__mark">A</span>
+      <span><span class="brand__name">Aurelia</span><span class="brand__sub">Gulshan · Dhaka</span></span>
+    </a>
+    <button class="nav__toggle" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="Menu"><span></span></button>
+    <div class="nav__links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="rooms.html">Rooms &amp; rates</a>
+      <a href="dining.html">Dining</a>
+      <a href="offers.html">Offers</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="contact.html">Contact</a>
+      <a class="btn btn--primary btn--sm" href="booking.html">Book now</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+
+  <section class="page-head">
+    <div class="wrap">
+      <p class="eyebrow">Accommodation</p>
+      <h1 class="display">Rooms &amp; suites</h1>
+      <p class="lede">Twenty-five keys across six floors. Every room has a desk, blackout curtains and a window that opens — which in this city is not a given.</p>
+    </div>
+  </section>
+
+  <!-- Availability bar -->
+  <section class="wrap" style="margin-top:28px">
+    <form class="bookbar" id="searchForm" novalidate>
+      <div class="field">
+        <label for="q-in">Check in</label>
+        <input class="input" type="date" id="q-in" required>
+      </div>
+      <div class="field">
+        <label for="q-out">Check out</label>
+        <input class="input" type="date" id="q-out" required>
+      </div>
+      <div class="field">
+        <label for="q-guests">Guests</label>
+        <select class="input" id="q-guests">
+          <option value="1">1 guest</option>
+          <option value="2" selected>2 guests</option>
+          <option value="3">3 guests</option>
+          <option value="4">4 guests</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="q-type">Room type</label>
+        <select class="input" id="q-type"><option value="">Any room type</option></select>
+      </div>
+      <button class="btn btn--primary" type="submit">Check availability</button>
+    </form>
+  </section>
+
+  <section class="section">
+    <div class="wrap"><div id="searchResults"></div></div>
+  </section>
+
+  <!-- Full rate table -->
+  <section class="section section--tint">
+    <div class="wrap">
+      <p class="eyebrow">Rate card</p>
+      <h2 class="display">Published rates</h2>
+      <p class="lede">Rates are per room, per night, in Bangladeshi Taka. A 10% service charge and 15% VAT are added at checkout.</p>
+      <div class="panel mt-2" style="padding:0;overflow:hidden">
+        <div class="table-scroll">
+          <table class="data">
+            <thead>
+              <tr>
+                <th>Room type</th>
+                <th>Size</th>
+                <th>Bed</th>
+                <th class="num">Sleeps</th>
+                <th class="num">Rooms</th>
+                <th class="num">Rate / night</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="rateRows"></tbody>
+          </table>
+        </div>
+      </div>
+      <p class="small muted mt-2">Children under six stay free in an existing bed. An extra bed is ৳2,000 per night where the room allows it.</p>
+    </div>
+  </section>
+
+  <!-- Every room type in detail -->
+  <section class="section">
+    <div class="wrap">
+      <p class="eyebrow">In detail</p>
+      <h2 class="display">Every room type</h2>
+      <div id="roomDetail" class="stack" style="gap:34px;margin-top:26px"></div>
+    </div>
+  </section>
+
+  <section class="section section--tint">
+    <div class="wrap center">
+      <h2 class="display">Found the one?</h2>
+      <p class="lede">Confirmation is instant and we hold the room the moment you book.</p>
+      <p class="mt-2"><a class="btn btn--primary" href="booking.html">Book a room</a></p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="brand" style="color:#fff;margin-bottom:12px">
+          <span class="brand__mark">A</span>
+          <span><span class="brand__name">Aurelia</span><span class="brand__sub">Gulshan · Dhaka</span></span>
+        </div>
+        <p>House 42, Road 11, Gulshan 2<br>Dhaka 1212, Bangladesh</p>
+        <p>+880 1700 000000<br><a href="mailto:stay@aurelia-demo.example">stay@aurelia-demo.example</a></p>
+      </div>
+      <div>
+        <h4>Stay</h4>
+        <ul>
+          <li><a href="rooms.html">Rooms &amp; rates</a></li>
+          <li><a href="booking.html">Book a room</a></li>
+          <li><a href="offers.html">Offers &amp; packages</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Hotel</h4>
+        <ul>
+          <li><a href="dining.html">Dining</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="admin.html">Staff login</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Front desk</h4>
+        <p>Check-in from 14:00<br>Check-out by 12:00<br>Reception staffed 24 hours</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year">2026</span> Aurelia Hotel — a fictional hotel, built as a demo project.</span>
+      <span>Hosted on GitHub Pages</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/ui.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const inEl = qs('#q-in'), outEl = qs('#q-out'),
+        guestsEl = qs('#q-guests'), typeEl = qs('#q-type'),
+        results = qs('#searchResults');
+
+  inEl.value = todayISO();
+  outEl.value = todayISO(1);
+  applyDateBounds(inEl, outEl);
+
+  const types = DB.types();
+  types.forEach(t => typeEl.appendChild(el('option', { value: t.code, text: t.name })));
+
+  /* Rate table */
+  const rows = qs('#rateRows');
+  types.forEach(t => {
+    const tr = el('tr');
+    tr.innerHTML = `
+      <td><strong>${t.name}</strong></td>
+      <td>${t.size} m²</td>
+      <td>${t.bed}</td>
+      <td class="num">${t.capacity}</td>
+      <td class="num">${sellableRooms(t.code).length}</td>
+      <td class="num"><strong>${moneyTk(t.rate)}</strong></td>
+      <td class="num"><a class="btn btn--ghost btn--sm" href="booking.html?type=${t.code}">Book</a></td>`;
+    rows.appendChild(tr);
+  });
+
+  /* Detailed sections */
+  const detail = qs('#roomDetail');
+  types.forEach((t, i) => {
+    const sec = el('div', { class: 'split' + (i % 2 ? ' split--rev' : '') });
+    sec.innerHTML = `
+      <div>
+        <p class="eyebrow">${moneyTk(t.rate)} per night</p>
+        <h3 style="font-size:1.5rem" class="display">${t.name}</h3>
+        <p>${t.blurb}</p>
+        <div class="meta-row" style="margin-bottom:12px">
+          <span>⤢ ${t.size} m²</span><span>☗ ${t.bed}</span>
+          <span>☺ up to ${t.capacity}</span><span>☍ ${sellableRooms(t.code).length} rooms</span>
+        </div>
+        <ul class="taglist" style="margin-bottom:16px">${t.amenities.map(a => `<li>${a}</li>`).join('')}</ul>
+        <a class="btn btn--primary btn--sm" href="booking.html?type=${t.code}">Check dates for this room</a>
+      </div>
+      <div class="media-frame" style="background-image:url('${t.img}')"></div>`;
+    detail.appendChild(sec);
+  });
+
+  /* Search */
+  qs('#searchForm').addEventListener('submit', e => {
+    e.preventDefault();
+    if (!inEl.value || !outEl.value || outEl.value <= inEl.value) {
+      showNotice(results, 'bad', '<span>⚠</span><span>Please pick a check-out date after your check-in date.</span>');
+      return;
+    }
+    renderAvailability(results, inEl.value, outEl.value, Number(guestsEl.value), typeEl.value);
+  });
+
+  renderAvailability(results, inEl.value, outEl.value, Number(guestsEl.value), '');
+});
+</script>
+</body>
+</html>
